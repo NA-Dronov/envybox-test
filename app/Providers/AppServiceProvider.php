@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\IStorage;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(IStorage::class,function($app){
+            $result = [];
+            foreach (config('storage') as $class) {
+                $result[] = new $class();
+            }
+    
+            return collect($result);
+        });
     }
 
     /**
