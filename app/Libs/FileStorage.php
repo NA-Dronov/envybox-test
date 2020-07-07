@@ -1,14 +1,17 @@
 <?php
 namespace App\Libs;
 
-use App\IStorage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class FileStorage implements IStorage {
     public function store(array $data)
     {
-        $name='claim_'.$data['name'].'_'.Carbon::now()->toDateString().'_'.Carbon::now()->timestamp;
-        Storage::disk('local')->put('claims/'.$name.'.json', json_encode($data));
+        $name='claim_'.$data['id'].'_'.Carbon::now()->timestamp;
+        $text='';
+        foreach (array_filter($data,function($el){return !in_array($el,['id','updated_at']);},ARRAY_FILTER_USE_KEY) as $key => $value) {
+            $text.='['.strtoupper($key).']'.PHP_EOL.$value.PHP_EOL;
+        }
+        Storage::disk('local')->put('claims/'.$name.'.txt', $text);
     }
 }

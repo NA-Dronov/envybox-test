@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
-use App\IStorage;
+use App\Libs\IStorage;
+use App\Models\Claim;
+use App\Observers\ClaimObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Claim::observe(ClaimObserver::class);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Libs;
 
 interface IStorage {
     function store(array $data);

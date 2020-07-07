@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClaimRequest;
 use App\IStorage;
+use App\Models\Claim;
 
 class ClaimController extends Controller
 {
@@ -16,16 +17,7 @@ class ClaimController extends Controller
      */
     public function __invoke(ClaimRequest $request)
     {
-        //Берём зарегистрированные методы хранения
-        //Через фабрику вызываем хранилища
-        //Сохраняем в хранилищах заявку
-        /**
-         * @var \Illuminate\Support\Collection
-         */
-        $storageList=app(IStorage::class);
-        foreach($storageList as $storage) {
-            $storage->store($request->validated());
-        }
+        Claim::create($request->validated());
         return response([
             'message' => 'Подздравляем! Заявка успешно обработана на сервере.',
             'type' => 'success'

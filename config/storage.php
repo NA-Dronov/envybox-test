@@ -1,6 +1,5 @@
 <?php
 
 return [
-    'db' => 'App\Models\Claim',
-    'file' => 'App\Libs\FileStorage',
+    App\Libs\FileStorage::class,
 ];
